@@ -1,202 +1,128 @@
-# Guidance Title (required)
+# Guidance for Custom AI Code Generator on AWS
 
-The Guidance title should be consistent with the title established first in Alchemy.
+## Table of Contents
 
-**Example:** *Guidance for Product Substitutions on AWS*
-
-This title correlates exactly to the Guidance it’s linked to, including its corresponding sample code repository. 
-
-
-## Table of Content (required)
-
-List the top-level sections of the README template, along with a hyperlink to the specific section.
-
-### Required
-
-1. [Overview](#overview-required)
+1. [Overview](#overview)
+    - [Architecture](#architecture)
     - [Cost](#cost)
-2. [Prerequisites](#prerequisites-required)
-    - [Operating System](#operating-system-required)
-3. [Deployment Steps](#deployment-steps-required)
-4. [Deployment Validation](#deployment-validation-required)
-5. [Running the Guidance](#running-the-guidance-required)
-6. [Next Steps](#next-steps-required)
-7. [Cleanup](#cleanup-required)
-
-***Optional***
-
+2. [Prerequisites](#prerequisites)
+    - [Operating System](#operating-system)
+    - [Third-party tools](#third-party-tools)
+    - [AWS CDK bootstrap](#aws-cdk-bootstrap)
+    - [Supported Regions](#supported-regions)
+3. [Deployment Steps](#deployment-steps)
+4. [Deployment Validation](#deployment-validation)
+5. [Running the Guidance](#running-the-guidance)
+6. [Next Steps](#next-steps)
+7. [Cleanup](#cleanup)
 8. [FAQ, known issues, additional considerations, and limitations](#faq-known-issues-additional-considerations-and-limitations-optional)
-9. [Revisions](#revisions-optional)
-10. [Notices](#notices-optional)
-11. [Authors](#authors-optional)
+9. [Notices](#notices-optional)
 
-## Overview (required)
+## Overview
 
-1. Provide a brief overview explaining the what, why, or how of your Guidance. You can answer any one of the following to help you write this:
+This automated solution enables customers to leverage public open source repositories to train more robust Amazon CodeWhisperer Enterprise customizations. By orchestrating the process of detecting, downloading, and preparing new repository releases, this architecture provides seamless access to a wealth of up-to-date training data. Customers can focus on configuring the repositories they want to pull from instead of building complex workflows for sourcing public data. The event-driven automation checks for the latest releases and makes extracted assets readily available in Amazon S3 for training customizations. Rather than being limited to private repositories connected through CodeStar, customers can now tap into public open source code at scale to create CodeWhisperer customizations finely tuned to their needs, drawing on the most current repositories. This architecture unlocks the full potential of CodeWhisperer by enabling customers to leverage public data and achieve customizations with greater relevance powered by the most recent code.
 
-    - **Why did you build this Guidance?**
-    - **What problem does this Guidance solve?**
+### Architecture
 
-2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
-    - To add a screenshot, create an ‘assets/images’ folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README. 
+![reference architecture](assets/images/architecture.png)
 
 ### Cost
 
-This section is for a high-level cost estimate. Think of a likely straightforward scenario with reasonable assumptions based on the problem the Guidance is trying to solve. If applicable, provide an in-depth cost breakdown table in this section.
+You are responsible for the cost of the AWS services used while running this Guidance. As of October 2023, the cost for running this Guidance with the default settings in the US East (N. Virginia) AWS Region is approximately **$17 per month**, using the following assumptions:
 
-Start this section with the following boilerplate text:
+- 20 repositories checked every 60 minutes
+- The size of repository releases average 50MB each
+- SNS notifications sent to 10 subscribers
 
-_You are responsible for the cost of the AWS services used while running this Guidance. As of <month> <year>, the cost for running this Guidance with the default settings in the <Default AWS Region (Most likely will be US East (N. Virginia)) > is approximately $<n.nn> per month for processing ( <nnnnn> records )._
+## Prerequisites
 
-Replace this amount with the approximate cost for running your Guidance in the default Region. This estimate should be per month and for processing/serving resonable number of requests/entities.
+### Operating System
 
+This Guidance is compatible with Mac, Linux, and Windows operating systems.
 
-## Prerequisites (required)
+### Third-party tools
 
-### Operating System (required)
+- [AWS Cloud Development Kit (AWS CDK) v2](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
+- TypeScript 3.8 or later (```npm -g install typescript```)
+- [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) (optional)
 
-- Talk about the base Operating System (OS) and environment that can be used to run or deploy this Guidance, such as *Mac, Linux, or Windows*. Include all installable packages or modules required for the deployment. 
-- By default, assume Amazon Linux 2/Amazon Linux 2023 AMI as the base environment. All packages that are not available by default in AMI must be listed out.  Include the specific version number of the package or module.
+### AWS CDK bootstrap
 
-**Example:**
-“These deployment instructions are optimized to best work on **<Amazon Linux 2 AMI>**.  Deployment in another OS may require additional steps.”
+This Guidance uses AWS CDK. Bootstrapping is the process of provisioning resources for the AWS CDK before you can deploy AWS CDK apps into an AWS environment. (An AWS environment is a combination of an AWS account and Region). If you are using AWS CDK for the first time in an AWS environment, please run the following bootstrapping command:
 
-- Include install commands for packages, if applicable.
+```cdk bootstrap aws://ACCOUNT-NUMBER/REGION```
 
+For additional information or customizations with AWS CDK bootstrapping, see [Bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html) in the AWS CDK documentation.
 
-### Third-party tools (If applicable)
+### Supported Regions
 
-*List any installable third-party tools required for deployment.*
+CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Region). To support Amazon CodeWhisperer Enterprise customizations using Amazon S3, this Guidance must also be deployed in `us-east-1` (the US East (N. Virginia) Region).
 
+## Deployment Steps
 
-### AWS account requirements (If applicable)
+### Option 1: Deploy via Amazon CodeCatalyst blueprint
 
-*List out pre-requisites required on the AWS account if applicable, this includes enabling AWS regions, requiring ACM certificate.*
-
-**Example:** “This deployment requires you have public ACM certificate available in your AWS account”
-
-**Example resources:**
-- ACM certificate 
-- DNS record
-- S3 bucket
-- VPC
-- IAM role with specific permissions
-- Enabling a Region or service etc.
-
-
-### aws cdk bootstrap (if sample code has aws-cdk)
-
-<If using aws-cdk, include steps for account bootstrap for new cdk users.>
-
-**Example blurb:** “This Guidance uses aws-cdk. If you are using aws-cdk for first time, please perform the below bootstrapping....”
-
-### Service limits  (if applicable)
-
-<Talk about any critical service limits that affect the regular functioning of the Guidance. If the Guidance requires service limit increase, include the service name, limit name and link to the service quotas page.>
-
-### Supported Regions (if applicable)
-
-<If the Guidance is built for specific AWS Regions, or if the services used in the Guidance do not support all Regions, please specify the Region this Guidance is best suited for>
-
-
-## Deployment Steps (required)
-
-Deployment steps must be numbered, comprehensive, and usable to customers at any level of AWS expertise. The steps must include the precise commands to run, and describe the action it performs.
-
-* All steps must be numbered.
-* If the step requires manual actions from the AWS console, include a screenshot if possible.
-* The steps must start with the following command to clone the repo. ```git clone xxxxxxx```
-* If applicable, provide instructions to create the Python virtual environment, and installing the packages using ```requirement.txt```.
-* If applicable, provide instructions to capture the deployed resource ARN or ID using the CLI command (recommended), or console action.
-
+1. Create a new project in Amazon CodeCatalyst
+2. Select **Start with a blueprint** and choose the **Custom AI Code Generator** blueprint. Click **Next**.
+3. Give your project a name.
+4. Select an AWS account, IAM role, and AWS region.
+5. Click **Create project**.
  
-**Example:**
+### Option 2: Manually deploy CDK application
 
-1. Clone the repo using command ```git clone xxxxxxxxxx```
-2. cd to the repo folder ```cd <repo-name>```
-3. Install packages in requirements using command ```pip install requirement.txt```
-4. Edit content of **file-name** and replace **s3-bucket** with the bucket name in your account.
-5. Run this command to deploy the stack ```cdk deploy``` 
-6. Capture the domain name created by running this CLI command ```aws apigateway ............```
+1. Clone the repo using command ```git clone https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws.git```
+2. Change the current directory to the repo folder using command ```cd guidance-for-custom-ai-code-generator-on-aws```
+3. Install required packages in using command ```npm install```
+4. Edit the ```public_github_repos``` array attribute in **cdk.json** to include strings of the repositories you'd like to include in Amazon CodeWhisperer customizations. The string format is ```GITHUB_ORG/REPOSITORY_NAME```.
+5. Change the current directory to the `source` folder using command ```cd source```
+6. Deploy the stack using the command ```cdk deploy``` 
+7. Enter `y` when prompted with the question, ```Do you wish to deploy these changes (y/n)?```
 
+## Deployment Validation
 
+To validate deployment, use one or more of the following methods:
 
-## Deployment Validation  (required)
+- From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the CloudFormation console, click **Stacks** on the left-hand menu, and verify the stack with the name **CustomAiCodeGeneratorStack** has a status of **CREATE_COMPLETE**.
+- If AWS CLI is installed, run the following command to validate the deployment has a status of **CREATE_COMPLETE**: 
+    
+    ```aws cloudformation describe-stacks --stack-name CustomAiCodeGeneratorStack```
 
-<Provide steps to validate a successful deployment, such as terminal output, verifying that the resource is created, status of the CloudFormation template, etc.>
-
-
-**Examples:**
-
-* Open CloudFormation console and verify the status of the template with the name starting with xxxxxx.
-* If deployment is successful, you should see an active database instance with the name starting with <xxxxx> in        the RDS console.
-*  Run the following CLI command to validate the deployment: ```aws cloudformation describe xxxxxxxxxxxxx```
-
-
-
-## Running the Guidance (required)
-
-<Provide instructions to run the Guidance with the sample data or input provided, and interpret the output received.> 
-
-This section should include:
+## Running the Guidance
 
 * Guidance inputs
 * Commands to run
 * Expected output (provide screenshot if possible)
 * Output description
 
-
-
-## Next Steps (required)
+## Next Steps
 
 Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
 
+## Cleanup
 
-## Cleanup (required)
+To delete and cleanup deployed resources, use one or more of the following methods:
 
-- Include detailed instructions, commands, and console actions to delete the deployed Guidance.
-- If the Guidance requires manual deletion of resources, such as the content of an S3 bucket, please specify.
+- To cleanup with AWS CDK:
+    - If not currently in the `source` directory, run the command ```cd source```
+    - Run the command ```cdk destroy```
+    - Enter `y` for the following prompt.
+- From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the CloudFormation console, click **Stacks** on the left-hand menu, select the stack with the name **CustomAiCodeGeneratorStack**, and click **Delete**.
+- If AWS CLI is installed, run the following command: 
+    
 
+    ```aws cloudformation delete-stack --stack-name CustomAiCodeGeneratorStack```
 
+## Limitations and feedback
 
-## FAQ, known issues, additional considerations, and limitations (optional)
+**Limitations**
 
+- Supported open-source repository provider(s) are limited to **GitHub** only
+- Supported AWS Region(s) for this implementation are limited to **`us-east-1` (the US East (N. Virginia) Region)** only (see [Supported Regions](#supported-regions))
 
-**Known issues (optional)**
+**Feedback**
 
-<If there are common known issues, or errors that can occur during the Guidance deployment, describe the issue and resolution steps here>
+For any feedback, questions, or suggestions, please [submit a new issue](https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws/issues/new/choose).
 
+## Notices
 
-**Additional considerations (if applicable)**
-
-<Include considerations the customer must know while using the Guidance, such as anti-patterns, or billing considerations.>
-
-**Examples:**
-
-- “This Guidance creates a public AWS bucket required for the use-case.”
-- “This Guidance created an Amazon SageMaker notebook that is billed per hour irrespective of usage.”
-- “This Guidance creates unauthenticated public API endpoints.”
-
-
-Provide a link to the *GitHub issues page* for users to provide feedback.
-
-
-**Example:** *“For any feedback, questions, or suggestions, please use the issues tab under this repo.”*
-
-## Revisions (optional)
-
-Document all notable changes to this project.
-
-Consider formatting this section based on Keep a Changelog, and adhering to Semantic Versioning.
-
-## Notices (optional)
-
-Include a legal disclaimer
-
-**Example:**
 *Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
-
-
-## Authors (optional)
-
-Name of code contributors
