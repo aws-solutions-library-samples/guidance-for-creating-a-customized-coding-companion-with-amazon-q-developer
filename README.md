@@ -15,7 +15,7 @@
 5. [Running the Guidance](#running-the-guidance)
 6. [Next Steps](#next-steps)
 7. [Cleanup](#cleanup)
-8. [FAQ, known issues, additional considerations, and limitations](#faq-known-issues-additional-considerations-and-limitations-optional)
+8. [Additional Considerations, Limitations, and Feedback](#additional-considerations-limitations-and-feedback)
 9. [Notices](#notices-optional)
 
 ## Overview
@@ -48,7 +48,7 @@ This Guidance is compatible with Mac, Linux, and Windows operating systems.
 
 ### AWS CDK bootstrap
 
-This Guidance uses AWS CDK. Bootstrapping is the process of provisioning resources for the AWS CDK before you can deploy AWS CDK apps into an AWS environment. (An AWS environment is a combination of an AWS account and Region). If you are using AWS CDK for the first time in an AWS environment, please run the following bootstrapping command:
+This Guidance uses AWS CDK. Bootstrapping is the process of provisioning resources for the AWS CDK before you can deploy AWS CDK apps into an AWS environment (an AWS environment is a combination of an AWS account and Region). If you are using AWS CDK for the first time in an AWS environment, please run the following bootstrapping command:
 
 ```cdk bootstrap aws://ACCOUNT-NUMBER/REGION```
 
@@ -89,6 +89,8 @@ To validate deployment, use one or more of the following methods:
 
 ## Running the Guidance
 
+**TODO**
+
 * Guidance inputs
 * Commands to run
 * Expected output (provide screenshot if possible)
@@ -96,23 +98,31 @@ To validate deployment, use one or more of the following methods:
 
 ## Next Steps
 
+**TODO**
+
 Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
 
 ## Cleanup
 
-To delete and cleanup deployed resources, use one or more of the following methods:
+To delete and cleanup deployed resources, use one of the following methods:
 
 - To cleanup with AWS CDK:
     - If not currently in the `source` directory, run the command ```cd source```
     - Run the command ```cdk destroy```
-    - Enter `y` for the following prompt.
+    - Enter `y` when prompted ```Are you sure you want to delete: CustomAiCodeGeneratorStack (y/n)?```.
 - From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the CloudFormation console, click **Stacks** on the left-hand menu, select the stack with the name **CustomAiCodeGeneratorStack**, and click **Delete**.
 - If AWS CLI is installed, run the following command: 
     
 
     ```aws cloudformation delete-stack --stack-name CustomAiCodeGeneratorStack```
 
-## Limitations and feedback
+## Additional Considerations, Limitations, and Feedback
+
+**Additional Considerations**
+
+- This guidance code makes use of a public AWS Lambda layer published by [LambCI](https://github.com/lambci), for using **ssh** and **git** binaries
+    - License: MIT (see [LICENSE](https://github.com/lambci/git-lambda-layer/blob/master/LICENSE) file)
+    - GitHub repository: [lambci/git-lambda-layer](https://github.com/lambci/git-lambda-layer)
 
 **Limitations**
 
@@ -121,7 +131,7 @@ To delete and cleanup deployed resources, use one or more of the following metho
 
 **Feedback**
 
-For any feedback, questions, or suggestions, please [submit a new issue](https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws/issues/new/choose).
+For any feedback, questions, or suggestions, please [submit a new issue](https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws/issues).
 
 ## Notices
 

@@ -168,7 +168,7 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
       },
       layers: [
         new cliLayer.AwsCliLayer(this, 'AwsCliLayer'),
-        lambda.LayerVersion.fromLayerVersionArn(this, 'GitLayer', 'arn:aws:lambda:us-west-2:553035198032:layer:git-lambda2:8')
+        lambda.LayerVersion.fromLayerVersionArn(this, 'GitLayer', `arn:aws:lambda:${this.region}:553035198032:layer:git-lambda2:8`)
       ],
       architecture: lambda.Architecture.X86_64,
       memorySize: 1024,
