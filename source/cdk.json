@@ -17,6 +17,10 @@
     ]
   },
   "context": {
+    "bucket_name_prefix": "custom-ai-code-generator",
+    "bucket_removal_policy": "DESTROY",
+    "stack_name": "CustomAiCodeGeneratorStack",
+    "update_interval_minutes": "60",
     "public_github_repos": [
       "aws-greengrass/aws-greengrass-gdk-cli",
       "langchain-ai/langchain",

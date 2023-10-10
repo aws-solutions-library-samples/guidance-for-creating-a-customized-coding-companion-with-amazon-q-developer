@@ -21,6 +21,8 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const stackName = this.node.tryGetContext('stack_name');
+
     const repoTable = new ddb.Table(this, 'RepoTable', {
       partitionKey: {
         name: 'id',
@@ -31,8 +33,18 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
 
     repoTable.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
 
+    const removalPolicyString: string = this.node.tryGetContext("bucket_removal_policy");
+    let removalPolicy: cdk.RemovalPolicy;
+
+    if (removalPolicyString === 'DESTROY') {
+      removalPolicy = cdk.RemovalPolicy.DESTROY;
+    } else {
+      removalPolicy = cdk.RemovalPolicy.RETAIN;
+    }
+
     const repoBucket = new s3.Bucket(this, 'RepoBucket', {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      bucketName: `${this.node.tryGetContext('bucket_name_prefix')}-${this.account}-${this.region}`,
+      removalPolicy: removalPolicy,
       autoDeleteObjects: true,
       encryption: s3.BucketEncryption.S3_MANAGED
     });
@@ -57,7 +69,7 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
 
       if (fs.existsSync(`lib/ignore/${org}_${repoName}.ignore`)) {
 
-        let asset = new assets.Asset(this, `${org}_${repoName}.ignore`, {
+        let asset = new assets.Asset(this, `${stackName}_${org}_${repoName}.ignore`, {
           path: path.join(__dirname, `ignore/${org}_${repoName}.ignore`),
         });
 
@@ -65,15 +77,15 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
 
         ignoreFiles.push(asset);
 
-        const param = new ssm.StringParameter(this, `${org}_${repoName}.param`, {
-          parameterName: `/${org}/${repoName}/ignore_file`,
+        const param = new ssm.StringParameter(this, `${stackName}_${org}_${repoName}.param`, {
+          parameterName: `/${stackName}/${org}/${repoName}/ignore_file`,
           stringValue: asset.s3ObjectUrl,
-          description: `Ignore file for ${org}/${repoName}`
+          description: `Ignore file for ${stackName}/${org}/${repoName}`
         });
 
         params.push(param);
 
-        ignoreFileParam = `/${org}/${repoName}/ignore_file`;
+        ignoreFileParam = `/${stackName}/${org}/${repoName}/ignore_file`;
       }
 
       repoJsonObject.repositories.push({
@@ -207,6 +219,8 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
 
     map.iterator(mapDefinition);
 
+    const intervalMinutes: number = Number(this.node.tryGetContext("update_interval_minutes"));
+
     const constructProps: EventbridgeToStepfunctionsProps = {
       stateMachineProps: {
         definition: new tasks.LambdaInvoke(this, "ScanTask", {
@@ -214,10 +228,12 @@ export class CustomAiCodeGeneratorStack extends cdk.Stack {
         }).next(map)
       },
       eventRuleProps: {
-        schedule: events.Schedule.rate(cdk.Duration.minutes(60))
+        schedule: events.Schedule.rate(cdk.Duration.minutes(intervalMinutes))
       }
     };
 
     new EventbridgeToStepfunctions(this, 'ScheduledStateMachine', constructProps);
+
+    new cdk.CfnOutput(this, 'RepositoryBucket', { value: repoBucket.bucketName });
   }
 };

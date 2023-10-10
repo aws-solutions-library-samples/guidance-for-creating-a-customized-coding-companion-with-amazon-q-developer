@@ -82,25 +82,66 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 
 To validate deployment, use one or more of the following methods:
 
-- From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the CloudFormation console, click **Stacks** on the left-hand menu, and verify the stack with the name **CustomAiCodeGeneratorStack** has a status of **CREATE_COMPLETE**.
-- If AWS CLI is installed, run the following command to validate the deployment has a status of **CREATE_COMPLETE**: 
+- From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the CloudFormation console, click **Stacks** on the left-hand menu, and verify the stack with the name `<STACK_NAME>` has a status of **CREATE_COMPLETE**. After clicking the stack name, click the Outputs tab and take note of the `RepositoryBucket` value.
+- If AWS CLI is installed, run the following command to validate the deployment has a status of **CREATE_COMPLETE**, and take note of the `RepositoryBucket` output value: 
     
-    ```aws cloudformation describe-stacks --stack-name CustomAiCodeGeneratorStack```
+    ```aws cloudformation describe-stacks --stack-name <STACK_NAME>```
 
 ## Running the Guidance
 
-**TODO**
+### Observe repository table in Amazon DynamoDB
 
-* Guidance inputs
-* Commands to run
-* Expected output (provide screenshot if possible)
-* Output description
+1. From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the Amazon DynamoDB console and click **Tables** on the left-hand menu.
+
+2. Select the table starting with the prefix `CustomAiCodeGenerator`, and click **Explore table items**.
+
+3. Observe the repositories you have configured for downloading/extraction into Amazon S3. Attributes include `id`, `enabled`, `ignore_file_s3_url`, `modified`, and `version`.
+
+![Repository table](assets/images/table.png)
+
+### Observe Amazon S3 bucket contents
+
+1. From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the Amazon S3 console.
+2. Click the S3 bucket starting with the name observed from the previous step.
+3. Observe the contents of the bucket. The latest versions of configured repositories are stored in the `current/` prefix. Older versions that have been replaced are relocated under the `archived/` prefix.
+
+Alternatively, if AWS CLI is installed, run the following command to observe bucket contents: 
+    
+```aws s3 ls s3://<BUCKET_NAME>```
+
+
+### Create an Amazon CodeWhisperer customization
+
+1. From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the Amazon CodeWhisperer console, and click 'Customizations' in the left-hand menu.
+
+![CodeWhisperer menu](assets/images/codewhisperer-menu.png)
+
+2. Click **Create customization**
+
+![Customizations](assets/images/customizations.png)
+
+3. Enter a Customization name and description.
+4. For Source Provider, select **Amazon S3**, and enter the following S3 URI using the bucket name from the previous steps: `s3://<BUCKET_NAME>/current/`
+5. Click **Create customization**
+
+![Create customization](assets/images/create-customization.png)
 
 ## Next Steps
 
-**TODO**
+### Adding additional repositories 
 
-Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
+1. To include additional repositories for downloading/extraction into Amazon S3, add new strings to the ```public_github_repos``` array attribute in **cdk.json**.
+2. Re-deploy the CDK application (manually with `cdk deploy`, or pushing a new commit to your CodeCatalyst repository, which will trigger a deployment).
+
+### Removing/disabling repositories
+
+1. To include additional repositories for downloading/extraction into Amazon S3, remove the repository strings(s) from the ```public_github_repos``` array attribute in **cdk.json**.
+2. Re-deploy the CDK application (manually with `cdk deploy`, or pushing a new commit to your CodeCatalyst repository, which will trigger a deployment).
+
+### Configuring update interval
+
+1. To configure the recurring interval (in minutes) for which the AWS Step Functions state machine is triggered, update the ```update_interval_minutes``` string attribute in **cdk.json** (60 is default).
+2. Re-deploy the CDK application (manually with `cdk deploy`, or pushing a new commit to your CodeCatalyst repository, which will trigger a deployment).
 
 ## Cleanup
 
