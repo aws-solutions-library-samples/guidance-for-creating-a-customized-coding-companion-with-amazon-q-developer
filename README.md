@@ -65,7 +65,7 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 1. Create a new project in Amazon CodeCatalyst
 2. Select **Start with a blueprint** and choose the **Custom AI Code Generator** blueprint. Click **Next**.
 3. Give your project a name.
-4. Select an AWS account, IAM role, and AWS region.
+4. Select an **AWS account**, **IAM Role**, and **AWS Region**. Optionally configure settings under **Additional configuration options**.
 5. Click **Create project**.
  
 ### Option 2: Manually deploy CDK application
@@ -73,7 +73,16 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 1. Clone the repo using command ```git clone https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws.git```
 2. Change the current directory to the repo folder using command ```cd guidance-for-custom-ai-code-generator-on-aws```
 3. Install required packages in using command ```npm install```
-4. Edit the ```public_github_repos``` array attribute in **cdk.json** to include strings of the repositories you'd like to include in Amazon CodeWhisperer customizations. The string format is ```GITHUB_ORG/REPOSITORY_NAME```.
+4. Edit the following attribute values in **cdk.json**:
+
+| Attribute value  | Description |
+| ------------- | ------------- |
+| `public_github_repos`  | array of the repositories you'd like to include in Amazon CodeWhisperer customizations. The string format is `GITHUB_ORG/REPOSITORY_NAME` |
+| `bucket_name_prefix` | The prefix of the Amazon S3 bucket name to be created  |
+| `bucket_removal_policy` | The removal policy of the Amazon S3 bucket name to be created. Should be `DESTROY` or `RETAIN``.  |
+| `stack_name` | The name of the AWS CloudFormation Stack to be created  |
+| `update_interval_minutes` | The interval (minutes) in which this process will run on a recurring basis  |
+
 5. Change the current directory to the `source` folder using command ```cd source```
 6. Deploy the stack using the command ```cdk deploy``` 
 7. Enter `y` when prompted with the question, ```Do you wish to deploy these changes (y/n)?```
