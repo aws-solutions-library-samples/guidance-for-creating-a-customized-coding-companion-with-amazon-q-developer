@@ -73,7 +73,8 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 1. Clone the repo using command ```git clone https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws.git```
 2. Change the current directory to the repo folder using command ```cd guidance-for-custom-ai-code-generator-on-aws```
 3. Install required packages in using command ```npm install```
-4. Edit the following attribute values in **cdk.json**:
+4. Change the current directory to the `source` folder using command ```cd source```
+5. Edit the following attribute values in **cdk.json**:
 
 | Attribute value  | Description |
 | ------------- | ------------- |
@@ -83,7 +84,6 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 | `stack_name` | The name of the AWS CloudFormation Stack to be created  |
 | `update_interval_minutes` | The interval (minutes) in which this process will run on a recurring basis  |
 
-5. Change the current directory to the `source` folder using command ```cd source```
 6. Deploy the stack using the command ```cdk deploy``` 
 7. Enter `y` when prompted with the question, ```Do you wish to deploy these changes (y/n)?```
 
@@ -166,13 +166,7 @@ To delete and cleanup deployed resources, use one of the following methods:
 
     ```aws cloudformation delete-stack --stack-name CustomAiCodeGeneratorStack```
 
-## Additional Considerations, Limitations, and Feedback
-
-**Additional Considerations**
-
-- This guidance code makes use of a public AWS Lambda layer published by [LambCI](https://github.com/lambci), for using **ssh** and **git** binaries
-    - License: MIT (see [LICENSE](https://github.com/lambci/git-lambda-layer/blob/master/LICENSE) file)
-    - GitHub repository: [lambci/git-lambda-layer](https://github.com/lambci/git-lambda-layer)
+## Limitations and Feedback
 
 **Limitations**
 
