@@ -1,6 +1,3 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { errorMonitor } from 'stream';
-
 export const handler = async (event: any): Promise<any> => {
     try {
 

@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@aws-solutions-constructs/aws-eventbridge-stepfunctions": "^2.44.0",
-    "aws-cdk-lib": "2.96.2",
+    "aws-cdk-lib": "2.102.0",
+    "cdk-nag": "^2.27.171",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   }

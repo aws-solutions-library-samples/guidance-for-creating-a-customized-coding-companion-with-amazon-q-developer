@@ -9,3 +9,5 @@ cdk.out
 
 # temporary file used to capture repository list
 lib/repo.config
+
+appsec

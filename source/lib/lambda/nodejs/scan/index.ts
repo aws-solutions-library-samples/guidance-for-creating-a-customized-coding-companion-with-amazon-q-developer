@@ -1,4 +1,4 @@
-import { DynamoDBClient, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 const client = new DynamoDBClient();
 
 export const handler = async (event: any, context: any) => {
@@ -39,8 +39,8 @@ async function scanForEnabledRepos() {
 
             enabledRepos.push({
                 id: response.Items[i].id.S,
-                version: response.Items[i]?.version ? response.Items[i].version.S : undefined,
-                ignore_file_s3_url: response.Items[i]?.ignore_file_s3_url ? response.Items[i].ignore_file_s3_url.S : undefined
+                version: response.Items[i]?.version ? response.Items[i].version.S : "NULL",
+                ignore_file_s3_url: response.Items[i]?.ignore_file_s3_url ? response.Items[i].ignore_file_s3_url.S : "NULL"
             });
         }
 

@@ -26,7 +26,8 @@
       "langchain-ai/langchain",
       "langchain-ai/langchainjs",
       "scikit-learn/scikit-learn",
-      "joke2k/faker"
+      "joke2k/faker",
+      "awslabs/aws-solutions-constructs"
     ],
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
