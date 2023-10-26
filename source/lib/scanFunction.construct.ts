@@ -2,7 +2,6 @@ import { Construct } from 'constructs'
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LogGroup } from 'aws-cdk-lib/aws-logs';
-import { NagSuppressions } from 'cdk-nag';
 import { ServicePrincipal, Role, PolicyStatement, Effect, Policy } from 'aws-cdk-lib/aws-iam'
 import { Stack, Duration } from "aws-cdk-lib";
 import { Table } from 'aws-cdk-lib/aws-dynamodb';

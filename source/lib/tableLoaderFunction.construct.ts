@@ -149,7 +149,7 @@ export class TableLoaderFunction extends Construct {
             [
                 {
                     id: 'AwsSolutions-IAM5',
-                    reason: 'lorem ipsum',
+                    reason: 'Explicit permission for the Table Loader function to access all objects in the provided S3 bucket.',
                     appliesTo: [
                         {
                             regex: `/^Resource::arn:aws:s3:::<${bucket.node.id}(.*)\\*$/g`
@@ -165,7 +165,7 @@ export class TableLoaderFunction extends Construct {
             [
                 {
                     id: 'AwsSolutions-IAM5',
-                    reason: 'lorem ipsum',
+                    reason: 'Default permissions for accessing objects in CDK assets bucket (from cdk bootstrap).',
                     appliesTo: [
                         'Action::s3:List*',
                         'Action::s3:GetObject*',

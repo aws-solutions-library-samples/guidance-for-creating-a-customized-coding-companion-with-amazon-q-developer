@@ -85,7 +85,7 @@ export class FargateResources extends Construct {
             [
                 {
                     id: 'AwsSolutions-IAM5',
-                    reason: 'lorem ipsum',
+                    reason: 'Wildcard is used for creating new logs in the Fargate log group.',
                     appliesTo: [
                         'Resource::*',
                         {
@@ -165,24 +165,35 @@ export class FargateResources extends Construct {
             [
                 {
                     id: 'AwsSolutions-IAM4',
-                    reason: 'lorem ipsum',
+                    reason: 'Using managed policy as recommended in Task Execution IAM Role documentation for ECS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html',
                     appliesTo: [
                         'Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy',
                     ]
                 },
                 {
                     id: 'AwsSolutions-IAM5',
-                    reason: 'lorem ipsum',
+                    reason: 'Explicit permission for the Fargate task to access all objects in the provided S3 bucket.',
                     appliesTo: [
-                        'Resource::*',
-                        'Action::s3:List*',
-                        'Action::s3:GetObject*',
-                        'Action::s3:GetBucket*',
-                        'Action::kms:GenerateDataKey*',
-                        `Resource::arn:aws:s3:::${assetBucket.bucketName}/*`,
                         {
                             regex: `/^Resource::arn:aws:s3:::<${bucket.node.id}(.*)\\*$/g`
                         }
+                    ]
+                },
+                {
+                    id: 'AwsSolutions-IAM5',
+                    reason: 'Default permissions for accessing objects in CDK assets bucket (from cdk bootstrap).',
+                    appliesTo: [
+                        'Action::s3:List*',
+                        'Action::s3:GetObject*',
+                        'Action::s3:GetBucket*',
+                        `Resource::arn:aws:s3:::${assetBucket.bucketName}/*`,
+                    ]
+                },
+                {
+                    id: 'AwsSolutions-IAM5',
+                    reason: 'Configured as described in Amazon SNS Developer Guide: https://docs.aws.amazon.com/sns/latest/dg/sns-key-management.html',
+                    appliesTo: [
+                        'Action::kms:GenerateDataKey*',
                     ]
                 }
             ],

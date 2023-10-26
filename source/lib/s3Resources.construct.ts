@@ -1,5 +1,5 @@
 import { Construct } from 'constructs'
-import { Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3'
+import { BlockPublicAccess, Bucket, BucketEncryption } from 'aws-cdk-lib/aws-s3'
 import { Stack, RemovalPolicy } from "aws-cdk-lib";
 
 export class S3Resources extends Construct {
@@ -28,6 +28,7 @@ export class S3Resources extends Construct {
             encryption: BucketEncryption.S3_MANAGED,
             serverAccessLogsPrefix: 's3_server_access_logs/',
             enforceSSL: true,
+            blockPublicAccess: BlockPublicAccess.BLOCK_ALL
         });
 
     }
