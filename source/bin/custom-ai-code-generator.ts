@@ -12,5 +12,6 @@ cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }))
 new CustomAiCodeGeneratorStack(app, app.node.tryGetContext("stack_name"), {
   // Amazon CodeWhisperer is hosted in us-east-1, hence the hard-coded region for this AWS environment.
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: 'us-east-1' },
+  description: "Guidance for Custom AI Code Generator on AWS (SO9338)",
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
