@@ -22,18 +22,13 @@
     "stack_name": "CustomAiCodeGeneratorStack",
     "update_interval_minutes": "60",
     "public_github_repos": [
-      "aws-greengrass/aws-greengrass-gdk-cli",
-      "langchain-ai/langchain",
-      "langchain-ai/langchainjs",
-      "scikit-learn/scikit-learn",
-      "joke2k/faker",
-      "awslabs/aws-solutions-constructs"
+      "awslabs/aws-solutions-constructs",
+      "aws/aws-iot-device-sdk-js-v2"
     ],
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
     "@aws-cdk/core:target-partitions": [
-      "aws",
-      "aws-cn"
+      "aws"
     ],
     "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
     "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
