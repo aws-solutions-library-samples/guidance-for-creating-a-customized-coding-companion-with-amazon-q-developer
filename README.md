@@ -1,4 +1,4 @@
-# Guidance for Custom AI Code Generator on AWS
+# Guidance for Artificial Intelligence (AI)-Generated Custom Code on AWS
 
 ## Table of Contents
 
@@ -75,6 +75,9 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 3. Install required packages in using command ```npm install```
 4. Change the current directory to the `source` folder using command ```cd source```
 5. Edit the following attribute values in **cdk.json**:
+
+> **NOTE:**
+> Customers are responsible for making their own independent assessment regarding the repositories they choose to include in the deployment of this code sample. Customers should be aware of the license for each repository they include in the deployment, and ensure they are adhering to those license restrictions.
 
 | Attribute value  | Description |
 | ------------- | ------------- |
@@ -178,5 +181,7 @@ To delete and cleanup deployed resources, use one of the following methods:
 For any feedback, questions, or suggestions, please [submit a new issue](https://github.com/aws-solutions-library-samples/guidance-for-custom-ai-code-generator-on-aws/issues).
 
 ## Notices
+
+*Customers are responsible for making their own independent assessment regarding the repositories they choose to include in the deployment of this code sample. Customers should be aware of the license for each repository they include in the deployment, and ensure they are adhering to those license restrictions.*
 
 *Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*

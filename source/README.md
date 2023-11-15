@@ -1,4 +1,4 @@
-# CDK TypeScript project for Guidance for Custom AI Code Generator on AWS
+# CDK TypeScript project for Guidance for Artificial Intelligence (AI)-Generated Custom Code on AWS
 
 This is a CDK project developed with TypeScript.
 
