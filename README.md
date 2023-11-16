@@ -1,4 +1,4 @@
-# Guidance for Artificial Intelligence (AI)-Generated Custom Code on AWS
+# Guidance for Creating a Customized Coding Companion with Amazon CodeWhisperer on AWS
 
 ## Table of Contents
 
