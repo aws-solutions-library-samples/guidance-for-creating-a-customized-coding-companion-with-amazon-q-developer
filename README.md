@@ -63,7 +63,7 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 ### Option 1: Deploy via Amazon CodeCatalyst blueprint
 
 1. Create a new project in Amazon CodeCatalyst
-2. Select **Start with a blueprint** and choose the **Custom AI Code Generator** blueprint. Click **Next**.
+2. Select **Start with a blueprint** and choose the **Customized Coding Companion with Amazon CodeWhisperer** blueprint. Click **Next**.
 3. Give your project a name.
 4. Select an **AWS account**, **IAM Role**, and **AWS Region**. Optionally configure settings under **Additional configuration options**.
 5. Click **Create project**.
