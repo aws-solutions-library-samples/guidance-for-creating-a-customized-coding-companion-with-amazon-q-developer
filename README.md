@@ -1,4 +1,4 @@
-# Guidance for Creating a Customized Coding Companion with Amazon CodeWhisperer on AWS
+# Guidance for Creating a Customized Coding Companion with Amazon Q Customizations on AWS
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@
 
 ## Overview
 
-This automated solution enables customers to leverage public open source repositories to train more robust customizations with Amazon CodeWhisperer Professional. By orchestrating the process of detecting, downloading, and preparing new repository releases, this architecture provides seamless access to a wealth of up-to-date training data. Customers can focus on configuring the repositories they want to pull from instead of building complex workflows for sourcing public data. The event-driven automation checks for the latest releases and makes extracted assets readily available in Amazon S3 for training customizations. Rather than being limited to private repositories connected through CodeStar, customers can now tap into public open source code at scale to create CodeWhisperer customizations finely tuned to their needs, drawing on the most current repositories. This architecture unlocks the full potential of CodeWhisperer by enabling customers to leverage public data and achieve customizations with greater relevance powered by the most recent code.
+This automated solution enables customers to leverage public open source repositories to train more robust customizations with Amazon Q Customizations. By orchestrating the process of detecting, downloading, and preparing new repository releases, this architecture provides seamless access to a wealth of up-to-date training data. Customers can focus on configuring the repositories they want to pull from instead of building complex workflows for sourcing public data. The event-driven automation checks for the latest releases and makes extracted assets readily available in Amazon S3 for training customizations. Rather than being limited to private repositories connected through CodeStar, customers can now tap into public open source code at scale to create inline code suggestions finely tuned to their needs, drawing on the most current repositories. This architecture unlocks the full potential of Q Customizations by enabling customers to leverage public data and achieve customizations with greater relevance powered by the most recent code.
 
 ### Architecture
 
@@ -56,14 +56,14 @@ For additional information or customizations with AWS CDK bootstrapping, see [Bo
 
 ### Supported Regions
 
-CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Region). To support Amazon CodeWhisperer Enterprise customizations using Amazon S3, this Guidance must also be deployed in `us-east-1` (the US East (N. Virginia) Region).
+Q Customizations is currently hosted in `us-east-1` (the US East (N. Virginia) Region). To support Amazon Q Customizations using Amazon S3, this Guidance must also be deployed in `us-east-1` (the US East (N. Virginia) Region).
 
 ## Deployment Steps
 
 ### Option 1: Deploy via Amazon CodeCatalyst blueprint
 
 1. Create a new project in Amazon CodeCatalyst
-2. Select **Start with a blueprint** and choose the **Customized Coding Companion with Amazon CodeWhisperer** blueprint. Click **Next**.
+2. Select **Start with a blueprint** and choose the **Customized Coding Companion with Amazon Q Customizations** blueprint. Click **Next**.
 3. Give your project a name.
 4. Select an **AWS account**, **IAM Role**, and **AWS Region**. Optionally configure settings under **Additional configuration options**.
 5. Click **Create project**.
@@ -81,7 +81,7 @@ CodeWhisperer is currently hosted in `us-east-1` (the US East (N. Virginia) Regi
 
 | Attribute value  | Description |
 | ------------- | ------------- |
-| `public_github_repos`  | array of the repositories you'd like to include in Amazon CodeWhisperer customizations. The string format is `GITHUB_ORG/REPOSITORY_NAME` |
+| `public_github_repos`  | array of the repositories you'd like to include in Amazon Q Customizations. The string format is `GITHUB_ORG/REPOSITORY_NAME` |
 | `bucket_name_prefix` | The prefix of the Amazon S3 bucket name to be created  |
 | `bucket_removal_policy` | The removal policy of the Amazon S3 bucket name to be created. Should be `DESTROY` or `RETAIN``.  |
 | `stack_name` | The name of the AWS CloudFormation Stack to be created  |
@@ -122,11 +122,11 @@ Alternatively, if AWS CLI is installed, run the following command to observe buc
 ```aws s3 ls s3://<BUCKET_NAME>```
 
 
-### Create an Amazon CodeWhisperer customization
+### Create an Amazon Q Developer customization
 
-1. From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the Amazon CodeWhisperer console, and click 'Customizations' in the left-hand menu.
+1. From the [AWS Management Console](https://console.aws.amazon.com) in your web browser, open the Amazon Q Developer console, and click 'Customizations' in the left-hand menu.
 
-![CodeWhisperer menu](assets/images/codewhisperer-menu.png)
+![CodeWhisperer menu](assets/images/q-developer-menu.png)
 
 2. Click **Create customization**
 
