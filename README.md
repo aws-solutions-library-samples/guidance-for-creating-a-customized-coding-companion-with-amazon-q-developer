@@ -1,4 +1,4 @@
-# Guidance for Creating a Customized Coding Companion with Amazon Q Customizations on AWS
+# Guidance for Creating a Customized Coding Companion with Amazon Q Customizations
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ This automated solution enables customers to leverage public open source reposit
 
 ### Architecture
 
-![reference architecture](assets/images/architecture.png)
+![reference architecture](assets/images/creating-a-customized-coding-companion-with-amazon-q-developer.png)
 
 ### Cost
 
