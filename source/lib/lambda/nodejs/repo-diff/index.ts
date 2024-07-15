@@ -10,13 +10,15 @@ export const handler = async (event: any): Promise<any> => {
         const json = await res.json()
         const release = json[0];
 
+        
+
         return {
             statusCode: res.status,
             body: {
                 id: event['id'],
                 last_version: version,
                 release: release,
-                should_archive: version != release.tag_name,
+                should_archive: shouldArchive(version, release),
                 ignore_file_s3_url: ignore_file_s3_url
             }
         };
@@ -29,6 +31,18 @@ export const handler = async (event: any): Promise<any> => {
     }
 };
 
+function shouldArchive(version: string, release: any) {
+
+    if (!version || !release) {
+        return true;
+    } else if (!release.tag_name) {
+        return true;
+    } else {
+        return version != release.tag_name;
+    }
+
+}
+
 async function fetchWithRetries(url: string, retryCount = 0) {
     // split out the maxRetries option from the remaining
     // options (with a default of 3 retries)
@@ -38,7 +52,7 @@ async function fetchWithRetries(url: string, retryCount = 0) {
     } catch (error) {
         // if the retryCount has not been exceeded, call again
         if (retryCount < maxRetries) {
-            return fetchWithRetries(url, retryCount + 1);
+            return await fetchWithRetries(url, retryCount + 1);
         }
         // max retries exceeded
         throw error;
